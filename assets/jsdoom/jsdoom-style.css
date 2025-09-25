@@ -1,0 +1,90 @@
+html,
+body {
+  min-height: 100%;
+}
+
+.wp-block-jonathanbossenger-doom {
+  font-family: sans-serif;
+  text-align: center;
+  background: #111 url(https://goo.gl/D1AeUS) center no-repeat;
+  background-size: cover;
+  color: #aaa;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.wp-block-jonathanbossenger-doom .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wp-block-jonathanbossenger-doom .dosbox-container {
+  margin: 10% auto 0 auto;
+  width: 640px;
+  height: 400px;
+  max-width: 100%;
+}
+
+.wp-block-jonathanbossenger-doom .dosbox-container > .dosbox-overlay {
+  background: #333;
+}
+
+.wp-block-jonathanbossenger-doom #dosbox:hover .dosbox-start {
+  opacity: 1;
+}
+
+.wp-block-jonathanbossenger-doom #dosbox .dosbox-start {
+  background: url(https://static.tumblr.com/98vyz1x/eK4lj7luf/header.png) center no-repeat;
+  background-size: 150px;
+  height: 100%;
+  image-rendering: pixelated;
+  top: 4% !important;
+  color: rgba(0, 0, 0, 0);
+  filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.95));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wp-block-jonathanbossenger-doom .dosbox-powered {
+  opacity: 0.7;
+}
+
+.wp-block-jonathanbossenger-doom button {
+  border: 0;
+  margin: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  background: #f80;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.wp-block-jonathanbossenger-doom button:hover {
+  background: #fa0;
+}
+
+.wp-block-jonathanbossenger-doom p {
+  font-size: 32px;
+}
+
+.wp-block-jonathanbossenger-doom a {
+  color: #aaa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wp-block-jonathanbossenger-doom .dosbox-container {
+    width: 100%;
+    height: 300px;
+    margin: 5% auto 0 auto;
+  }
+
+  .wp-block-jonathanbossenger-doom p {
+    font-size: 24px;
+  }
+}
