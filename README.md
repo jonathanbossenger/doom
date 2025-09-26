@@ -64,6 +64,8 @@ The plugin includes an automated release process via GitHub Actions, but you can
 
 ### Creating a Release
 
+#### Option 1: Automatic Release via Git Tag
+
 1. Update version number in `doom.php` and `package.json`
 2. Create and push a version tag:
    ```bash
@@ -71,6 +73,14 @@ The plugin includes an automated release process via GitHub Actions, but you can
    git push origin v1.0.0
    ```
 3. The GitHub Action will automatically create a release with downloadable .zip file
+
+#### Option 2: Manual Release Trigger
+
+1. Update version number in `doom.php` and `package.json`
+2. Go to the GitHub repository's Actions tab
+3. Select the "Create Release" workflow
+4. Click "Run workflow" button on the desired branch
+5. The workflow will create a release using the version from `package.json`
 
 ### Manual Installation
 
