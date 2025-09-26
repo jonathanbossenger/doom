@@ -51,6 +51,34 @@ doom/
 - WebAssembly support required
 - Mobile devices supported
 
+## Development & Release
+
+### Building for Release
+
+The plugin includes an automated release process via GitHub Actions, but you can also build locally:
+
+```bash
+# Build plugin package locally
+./build-release.sh
+```
+
+### Creating a Release
+
+1. Update version number in `doom.php` and `package.json`
+2. Create and push a version tag:
+   ```bash
+   git tag -a v1.0.0 -m "Release version 1.0.0"
+   git push origin v1.0.0
+   ```
+3. The GitHub Action will automatically create a release with downloadable .zip file
+
+### Manual Installation
+
+Users can download the latest release from the [GitHub Releases page](../../releases) and install via:
+1. WordPress admin → Plugins → Add New → Upload Plugin
+2. Upload the downloaded `doom.zip` file
+3. Activate the plugin
+
 ## License
 
 GPL-2.0-or-later

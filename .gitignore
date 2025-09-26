@@ -26,5 +26,8 @@ node_modules/
 # Output of `wp-scripts plugin-zip`
 *.zip
 
+# Temporary plugin build directory
+temp-plugin/
+
 # dotenv environment variables file
 .env

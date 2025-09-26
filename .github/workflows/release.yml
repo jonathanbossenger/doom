@@ -1,0 +1,90 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create WordPress Plugin Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build plugin
+        run: npm run build
+        
+      - name: Create plugin zip
+        run: |
+          # Create a temporary directory for the plugin
+          mkdir -p temp-plugin/doom
+          
+          # Copy built files
+          cp -r build temp-plugin/doom/
+          
+          # Copy essential plugin files
+          cp doom.php temp-plugin/doom/
+          cp README.md temp-plugin/doom/
+          cp readme.txt temp-plugin/doom/
+          
+          # Copy assets directory (contains game files)
+          cp -r assets temp-plugin/doom/
+          
+          # Create the zip file
+          cd temp-plugin
+          zip -r ../doom.zip doom/
+          cd ..
+          
+          # Verify zip contents
+          echo "Contents of doom.zip:"
+          unzip -l doom.zip
+        
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Doom WordPress Plugin v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## Doom WordPress Plugin Release v${{ steps.version.outputs.VERSION }}
+            
+            Download and install this WordPress plugin to add a playable Doom game block to your WordPress site.
+            
+            ### Installation Instructions
+            1. Download the `doom.zip` file below
+            2. In your WordPress admin, go to Plugins → Add New → Upload Plugin
+            3. Choose the downloaded `doom.zip` file and click "Install Now"
+            4. Activate the plugin
+            5. Add the "Doom" block to any post or page through the block editor
+            
+            ### System Requirements
+            - WordPress 6.7 or higher
+            - PHP 7.4 or higher
+            - Modern browser with WebAssembly support
+            
+            ### What's Included
+            - Doom WordPress block for the block editor
+            - JS-DOS emulator for running classic Doom
+            - Ultimate Doom shareware game files
+            - Mobile-responsive game interface
+            - Fullscreen support
+          files: |
+            doom.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
