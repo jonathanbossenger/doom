@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   release:
@@ -51,14 +52,22 @@ jobs:
           echo "Contents of doom.zip:"
           unzip -l doom.zip
         
-      - name: Extract version from tag
+      - name: Extract version
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+            # Extract version from tag when triggered by tag push
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            # Extract version from package.json when manually triggered
+            echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          fi
         
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: "Doom WordPress Plugin v${{ steps.version.outputs.VERSION }}"
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', steps.version.outputs.VERSION) || github.ref_name }}
           body: |
             ## Doom WordPress Plugin Release v${{ steps.version.outputs.VERSION }}
             
